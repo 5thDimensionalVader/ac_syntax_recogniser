@@ -6,8 +6,6 @@
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
-import java.util.regex.*;
-
 import static java.lang.Integer.parseInt;
 
 public class Scanner {

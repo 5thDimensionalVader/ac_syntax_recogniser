@@ -30,8 +30,10 @@ public class Parser {
     }
     public void Dcls(){
 //   Dcls → Dcl Dcls | e
-        Dcl();
-        Dcls();
+        if(scanner.token == Token.floatdcl_token || scanner.token == Token.intdcl_token){
+            Dcl();
+            Dcls();
+        }
     }
 
     public void Dcl() {
@@ -47,8 +49,10 @@ public class Parser {
 
     public void Stmts() {
 //   Stmts → Stmt Stmts
-        Stmt();
-        Stmts();
+        if(scanner.token == Token.id_token || scanner.token == Token.print_token) {
+            Stmt();
+            Stmts();
+        }
     }
 
     public void Stmt() {
@@ -58,9 +62,11 @@ public class Parser {
             scanner.match(Token.assignop);
             Val();
             Expr();
-        } else {
+        } else if (scanner.token == Token.print_token){
             scanner.match(Token.print_token);
             scanner.match(Token.id_token);
+        } else {
+            System.err.println("ParseError");
         }
     }
 
