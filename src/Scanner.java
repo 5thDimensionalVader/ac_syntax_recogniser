@@ -67,7 +67,6 @@ public class Scanner {
                     break;
             }
         } else if (isIntegralDigit(character)){
-            number = getNumber();
             token = Token.inum;
         } else if(isFloatDigit(character)) {
             token = Token.fnum;
@@ -107,15 +106,6 @@ public class Scanner {
         System.err.println(e_msg + this.buffer.line_position + " at column "+this.buffer.column);
         System.out.println(record);
         System.exit(1);
-    }
-
-    private int getNumber(){
-        int r = 0;
-        do {
-            r = r * 10 + parseInt(character, 10);
-            character = String.valueOf(buffer.get());
-        } while (isIntegralDigit(character));
-        return r;
     }
 
 }
