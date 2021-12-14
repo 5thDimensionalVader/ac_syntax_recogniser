@@ -72,18 +72,17 @@ public class Scanner {
                 character = buffer.get();
             }
 
-            if (isFloatDigit(number)) {
-                character = buffer.get();
-                token = Token.fnum;
-            } else if (isIntegralDigit(number)) {
+            if (isIntegralDigit(number)) {
                 character = buffer.get();
                 token = Token.inum;
+            } else if (isFloatDigit(number)) {
+                character = buffer.get();
+                token = Token.fnum;
             } else {
                 error("Invalid number " + character + " on line: ");
             }
 
-        }
-        else {
+        } else {
             switch (character) {
 
                 case '+':
