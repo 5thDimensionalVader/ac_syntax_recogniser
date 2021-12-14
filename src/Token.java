@@ -24,7 +24,7 @@ public class Token {
     public static final int inum = 7;
     public static final int fnum = 8;
 
-    public static String[] TokenArray = {"floatdcl", "intdcl", "print", "id", "=", "+", "-", "int", "float"};
+    public static String[] TokenArray = {"floatdcl", "intdcl", "print", "id", "assign", "plus", "minus", "inum", "fnum"};
 
 //    write a function to convert token to string
     public static String toString(int k){
