@@ -6,75 +6,94 @@
 
 import java.io.BufferedReader;
 import java.util.ArrayList;
+import java.util.regex.*;
+
+import static java.lang.Integer.parseInt;
 
 public class Scanner {
     //    define the instance variables for the Scanner class
     public int token;
-    private char character = ' ';
-    private ArrayList<String> record = new ArrayList<>();
+    private String character = "";
+    private final ArrayList<String> record = new ArrayList<>();
     private String word = "";
     private int number = 0;
-    private Buffer buffer;
+    private final Buffer buffer;
 
     //    define a Scanner method
     public Scanner(BufferedReader fileInput) {
         buffer = new Buffer(fileInput);
-        token = Token.FLOATDCL_TOKEN;
+        token = Token.floatdcl_token;
+    }
+
+//    boolean function to check for alphabet
+    public static boolean isAlpha(String s) {
+        return s != null && s.matches("^[a-zA-Z]*$");
+    }
+//    boolean function to check for integer
+    public static boolean isIntegralDigit(String i){
+        return i != null && i.matches("[+-]?[0-9]+");
+    }
+//    boolean function to check for float
+    public static boolean isFloatDigit(String f){
+        return f != null && f.matches("[+-]?\\d+(\\.\\d+)?([Ee][+-]?\\d+)?");
     }
 
     public int getToken() {
-        while (Character.isWhitespace(character)){
-            character = buffer.get();
+        while (character.contains(" ")){
+            character = String.valueOf(buffer.get());
+//            basically do nothing when it is a whitespace or empty string
         }
-        if (Character.isLetter(character)){
-            word ="";
-            while(Character.isLetter(character)){
-                word += Character.toString(character);
-                character = buffer.get();
+        if (isAlpha(character)){
+            word = "";
+            while(isAlpha(character)){
+                word = word.concat(character);
+                character = String.valueOf(buffer.get());
             }
 
             switch (word){
                 case "f":
-                    character = buffer.get();
-                    token = Token.FLOATDCL_TOKEN;
+                    character = String.valueOf(buffer.get());
+                    token = Token.floatdcl_token;
                     break;
                 case "i":
-                    character = buffer.get();
-                    token = Token.INTDCL_TOKEN;
+                    character = String.valueOf(buffer.get());
+                    token = Token.intdcl_token;
                     break;
                 case "p":
-                    character = buffer.get();
-                    token = Token.PRINT_TOKEN;
+                    character = String.valueOf(buffer.get());
+                    token = Token.print_token;
                     break;
                 default:
-                    character = buffer.get();
-                    token = Token.ID_TOKEN;
+                    character = String.valueOf(buffer.get());
+                    token = Token.id_token;
                     break;
             }
-        } else if (Character.isDigit(character)){
+        } else if (isIntegralDigit(character)){
             number = getNumber();
-            token = Token.number;
+            token = Token.inum;
+        } else if(isFloatDigit(character)) {
+            token = Token.fnum;
         } else {
             switch (character){
-                case '+':
-                    character = buffer.get();
-                    token = Token.plus_operator;
+                case "+":
+                    character = String.valueOf(buffer.get());
+                    token = Token.plusop;
                     break;
-                case '-':
-                    character = buffer.get();
-                    token = Token.minus_operator;
+                case "-":
+                    character = String.valueOf(buffer.get());
+                    token = Token.minusop;
                     break;
-                case '=':
-                    character = buffer.get();
-                    token = Token.assign_operator;
+                case "=":
+                    character = String.valueOf(buffer.get());
+                    token = Token.assignop;
                     break;
                 default:
                     error("Illegal character " + character + " on line: ");
                     break;
             }
         }
-        record.add(Token.TokenString[token]);
-//        System.out.println(" The token type is " + Token.TokenString[token]);
+        record.add(Token.TokenArray[token]);
+        System.out.println(" The token type is " + Token.TokenArray[token]);
         return token;
     }
 
@@ -95,9 +114,9 @@ public class Scanner {
     private int getNumber(){
         int r = 0;
         do {
-            r = r * 10 + Character.digit(character,10);
-            character = buffer.get();
-        } while (Character.isDigit(character));
+            r = r * 10 + parseInt(character, 10);
+            character = String.valueOf(buffer.get());
+        } while (isIntegralDigit(character));
         return r;
     }
 
@@ -108,7 +127,7 @@ class Buffer {
     private String line = "";
     public int column = 0;
     public int line_position = 0;
-    private BufferedReader input;
+    private final BufferedReader input;
 
     public Buffer(BufferedReader input){this.input = input;} //Buffer
 

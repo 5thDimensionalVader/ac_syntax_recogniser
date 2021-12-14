@@ -36,12 +36,12 @@ public class Parser {
 
     public void Dcl() {
 //     Dcl → floatdcl id | intdcl id
-       if (scanner.token == Token.FLOATDCL_TOKEN){
-           scanner.match(Token.FLOATDCL_TOKEN);
-           scanner.match(Token.ID_TOKEN);
-       } else if (scanner.token == Token.INTDCL_TOKEN) {
-           scanner.match(Token.INTDCL_TOKEN);
-           scanner.match(Token.ID_TOKEN);
+       if (scanner.token == Token.floatdcl_token){
+           scanner.match(Token.floatdcl_token);
+           scanner.match(Token.id_token);
+       } else if (scanner.token == Token.intdcl_token) {
+           scanner.match(Token.intdcl_token);
+           scanner.match(Token.id_token);
        }
     }
 
@@ -53,38 +53,38 @@ public class Parser {
 
     public void Stmt() {
 //  Stmt → id assign Val Expr | print id
-        if(scanner.token == Token.ID_TOKEN){
-            scanner.match(Token.ID_TOKEN);
-            scanner.match(Token.assign_operator);
+        if(scanner.token == Token.id_token){
+            scanner.match(Token.id_token);
+            scanner.match(Token.assignop);
             Val();
             Expr();
         } else {
-            scanner.match(Token.PRINT_TOKEN);
-            scanner.match(Token.ID_TOKEN);
+            scanner.match(Token.print_token);
+            scanner.match(Token.id_token);
         }
     }
 
     public void Expr(){
 //   Expr → plus Val Expr | minus Val Expr | e
-        if(scanner.token == Token.plus_operator){
-            scanner.match(Token.plus_operator);
+        if(scanner.token == Token.plusop){
+            scanner.match(Token.plusop);
             Val();
             Expr();
-        } else if (scanner.token == Token.minus_operator){
-            scanner.match(Token.minus_operator);
+        } else if (scanner.token == Token.minusop){
+            scanner.match(Token.minusop);
             Val();
             Expr();
-        } else {
-            scanner.match(Token.blank);
         }
     }
 
     public void Val(){
 //        Val → id | inum | fnum
-        if(scanner.token == Token.ID_TOKEN){
-            scanner.match(Token.ID_TOKEN);
-        } else if (scanner.token == Token.number){
-            scanner.match(Token.number);
+        if(scanner.token == Token.id_token){
+            scanner.match(Token.id_token);
+        } else if (scanner.token == Token.inum){
+            scanner.match(Token.inum);
+        } else {
+            scanner.match(Token.fnum);
         }
     }
 

@@ -11,24 +11,26 @@ public class Token {
     * inum --> [0-9]+
     * fnum --> [0-9]+.[0-9]+
     * blank --> " "+
+    *
     * */
-    public static final int FLOATDCL_TOKEN = 0;
-    public static final int INTDCL_TOKEN = 1;
-    public static final int PRINT_TOKEN = 2;
-    public static final int ID_TOKEN = 3;
-    public static final int assign_operator = 4;
-    public static final int plus_operator = 5;
-    public static final int minus_operator = 6;
-    public static final int number = 7;
-    public static final int blank = 8;
 
-    public static String[] TokenString = {"f", "i", "p", "id", "=", "+", "-", "number", "blank"};
+    public static final int floatdcl_token = 0;
+    public static final int intdcl_token = 1;
+    public static final int print_token = 2;
+    public static final int id_token = 3;
+    public static final int assignop = 4;
+    public static final int plusop = 5;
+    public static final int minusop = 6;
+    public static final int inum = 7;
+    public static final int fnum = 8;
+
+    public static String[] TokenArray = {"f", "i", "p", "id", "=", "+", "-", "integral", "float", "blank"};
 
 //    write a function to convert token to string
     public static String toString(int k){
-        if (k < 0 || k > blank){
+        if (k < 0 || k > fnum){
             return "";
         }
-        return TokenString[k];
+        return TokenArray[k];
     }
 }
