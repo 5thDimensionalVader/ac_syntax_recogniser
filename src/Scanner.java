@@ -29,11 +29,11 @@ public class Scanner {
     }
 //    boolean function to check for integer
     public static boolean isIntegralDigit(String i){
-        return i != null && i.matches("[+-]?[0-9]+");
+        return i != null && i.matches("^([+-]?[0-9]+)$");
     }
 //    boolean function to check for float
     public static boolean isFloatDigit(String f){
-        return f != null && f.matches("[+-]?\\d+(\\.\\d+)?([Ee][+-]?\\d+)?");
+        return f != null && f.matches("^([+-]?\\d*\\.?\\d*)$");
     }
 
     public int getToken() {
@@ -90,7 +90,7 @@ public class Scanner {
             }
         }
         record.add(Token.TokenArray[token]);
-        System.out.println(" The token type is " + Token.TokenArray[token]);
+        System.out.println("Matched token type --> " + Token.TokenArray[token]);
         return token;
     }
 
